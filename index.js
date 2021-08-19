@@ -21,9 +21,11 @@ app.listen(port, () => {
 async function getBitCoinUSD(res) {
   try {
     const response = await axios.get("https://blockchain.info/ticker");
-    logger.info(response.data["USD"]);
-    return res.json(response.data["USD"]);
+    const d = new Date();
+    logger.info(`1 BTC = ${response.data["USD"]["last"]} at ${d}`);
+    return res.json(`1 BTC = ${response.data["USD"]["last"]} at ${d}`);
   } catch (error) {
-    logger.info(error);
+    logger.error(`${error}`);
+    return res.json(`${error}`);
   }
 }
